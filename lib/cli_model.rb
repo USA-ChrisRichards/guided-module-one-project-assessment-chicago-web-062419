@@ -1,15 +1,20 @@
-class CommandLineInterface < ActiveRecord::Migration[5.2]
+class CommandLineInterface
     def greet
         puts 'Welcome to UFC Stat Tracker, the best resource for UFC information in the world!'
     end
 
-    # def run
-    #     greet
-    #     puts "Thinking of eating somewhere but not sure if it's good? We can help you with that decision!"
-    #     puts "Enter a fighter name to get started:"
-    #     fighter_name = gets.chomp
-    #     Competitor.find_by(name: fighter_name)
-    #   end
+
+    def run
+        greet
+        puts "Thinking of eating somewhere but not sure if it's good? We can help you with that decision!"
+        puts "Enter a fighter name to get started:"
+        fighter_name = gets.chomp
+        fighter_name.to_s
+        p Competitor.find_by first_name: fighter_name
+        puts "Here is the name: #{fighter_name}"
+
+        # binding.pry
+     end
     #   # Request - Input
 
 # puts "Thinking of the which events a fighter fought in? We can find an answer!"
