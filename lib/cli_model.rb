@@ -1,7 +1,7 @@
 # a = Artii::Base.new
 # a.asciify('word')
 
-class CommandLineInterface
+class CommandLineInterface < ActiveRecord::Migration[5.2]
     def greet
         puts 'Welcome to UFC Stat Tracker, the best resource for UFC information in the world!'
     end
@@ -16,15 +16,16 @@ class CommandLineInterface
     def run
         greet
         # puts a.asciify('Welcome')
-        puts "Thinking of eating somewhere but not sure if it's good? We can help you with that decision!"
+        puts "Thinking of fighter's stats but not sure of something? We can help you with that decision!"
         puts "Enter a fighter name to get started:"
         fighter_name = gets.chomp
         fighter_name.to_s
-        puts Competitor.find_by first_name: fighter_name
+        # p Competitor.find_by first_name: fighter_name
+        p Competitor.find_by(first_name: fighter_name).events
         puts "Here is the name: #{fighter_name}"
-        average_attendance
-        average_gate
-        # binding.pry
+        "----------------------------"
+        puts Competitor.joins(:events).count
+
      end
   
      def average_attendance
@@ -43,6 +44,21 @@ class CommandLineInterface
     #     puts Competitor.find_by first_name: fighter_name
     #  end
 
+    # find a competitor's events
+    #find Fights.event_id WHERE competitor_id
+    #"Hazlett" fought in "Chicago"
+    # Competitor.find_by_id 1 = first row in competitors table
+    # def competitors_events
+
+    # competitor's cities they fought in(were at an event)
+    # def list_events
+    #     fights.collect do |fight|
+    #       "#{fight.competitor.id} +++ #{fight.event.venue}"
+    #     end
+    #   end
+
+    #   Competitor.find_by(first_name: 'Nik').events
+    
 end
 # cli = CommandLineInterface.new
 # cli.run
