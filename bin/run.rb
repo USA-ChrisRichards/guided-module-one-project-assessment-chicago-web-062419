@@ -2,7 +2,7 @@ require_relative '../config/environment'
 # require_relative '../lib/cli_model.rb'
     ## do i need this^^^
 
-puts "hello world"
+# puts "hello world"
 cli = CommandLineInterface.new
 cli.run
 
