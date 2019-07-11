@@ -16,35 +16,31 @@ class CommandLineInterface < ActiveRecord::Migration[5.2]
     def run
         greet
         # puts a.asciify('Welcome')
-        puts "------------------------------------------------------------------------------"
+        puts "*********************************************************************************"
+        menu
 
-        puts "Thinking of fighter's stats but not sure of something? We can help you with that!"
-        puts "Enter a fighter name to get started:"
-        
-        puts "------------------------------------------------------------------------------"
-        fighter_name = gets.chomp
-        fighter_name.to_s
-        # p Competitor.find_by first_name: fighter_name
-        puts "Here are all of the events #{fighter_name} has participated in:"
-        fighter_name_events = Competitor.find_by(first_name: fighter_name).events
-        puts fighter_name_events
-        puts "------------------------------------------------------------------------------"
-        puts Competitor.joins(:events).count
-        add_event
-
-     end
+        # puts "Enter a fighter name to get started:"
+        # puts "Type first name here: "
+        # input_first_name = gets.chomp
+        # puts "Type last name here: "
+        # input_last_name = gets.chomp
+        # puts "*********************************************************************************"
+        # # fighter_name = gets.chomp
+        # # fighter_name.to_s
+        # # p Competitor.find_by first_name: fighter_name
+        # puts "Here are all of the events #{input_first_name} #{input_last_name} has participated in:"
+        # fighter_name_events = Competitor.find_by(first_name: input_first_name, last_name: input_last_name).events
+        # #fighter_name_events = Competitor.find_by(first_name: fighter_name, last_name: input_last_name).events
+        # fighter_name_events.each {|e| p e}
+        #iterate over the event details and puts out each. More organized and cleaner
+        # puts "*********************************************************************************"
+        # puts "Total events in UFC:"
+        # p Competitor.joins(:events).count
+        # puts "*********************************************************************************"
+        # average_attendance
+        # add_event
+    end
   
-     def average_attendance
-        avg = Event.average("attendance")
-        avg = avg.round
-        puts "The average UFC event had approximately #{avg} people in attendance!"
-     end
-
-     def average_gate
-        avg = Event.average("gate")
-        avg = avg.round
-        puts "The average UFC event brought in approximately $#{avg}!"
-     end
 
     #  def find_competitor_by_first_name(fighter_name)
     #     puts Competitor.find_by first_name: fighter_name
@@ -63,13 +59,11 @@ class CommandLineInterface < ActiveRecord::Migration[5.2]
     #     end
     #   end
 
-    #   Competitor.find_by(first_name: 'Nik').events\
+    # Competitor.find_by(first_name: 'Nik').events\
 
-    # Student.joins(:klasses).where(klasses: {subject: 'Maths'}).distinct.pluck(:name) 
-    # get all students who attend the Maths class
     # Competitor.joins(events).where(events: {'attendance 15000})
 
-    # Client.where("orders_count = ?", params[:orders])
+    # Competitor.where("orders_count = ?", params[:orders])
 
     
 end
@@ -79,33 +73,63 @@ end
 #   need method for :create a new row for events(when new event occurs)
 #       Event.create(id: event[:id], date: event[:date], city: event[:city], state: event[:state], venue: event[:venue], attendance: event[:attendance], gate: event[:gate])
 # Create
-# i = Competitor.new
-# i.first_name = "Jon"
-# i.last_name = "Jones"
-# i.save
+# c = Competitor.new
+# c.first_name = "Jon"
+# c.last_name = "Jones"
+# c.save
 # Now you can just type i and it should show you that i has been inserted into the database and it has been assigned an ID number.
+def add_event
+    puts "Add an event by typing the required information below:"
+    puts "Date(YYYY-MM-DD): "
+    d = gets.chomp
+    puts "City: "
+    c = gets.chomp
+    puts "State: "
+    s = gets.chomp
+    puts "Venue Name: "
+    v = gets.chomp
+    puts "Attendance: "
+    att = gets.chomp
+    puts "Gate($): "
+    g = gets.chomp
+    # Event.create(date: d, city: c, state: s, venue: v, attendance: a, gate: g)
+    # new_event.save   ### commented to avoid save during testing
+    puts "New event: #{d} #{c}, #{s}, #{v}, #{att}, #{g}"
+    puts "Your added event has been saved! We thank you for your contribution."
+    # Event.create(id: event[:id], date: event[:date], city: event[:city], state: event[:state], venue: event[:venue], attendance: event[:attendance], gate: event[:gate])
+end
+# Can we add competitors that have fought at this event???
 ##########################################################################################
 #READ:
 #   average_attendance, average_gate
-    def add_event
-        puts "Add an event by typing the required information below:"
-        puts "City: "
-        c = gets.chomp
-        puts "State: "
-        s = gets.chomp
-        puts "Venue Name: "
-        v = gets.chomp
-        puts "Attendance: "
-        att = gets.chomp
-        puts "Gate($): "
-        g = gets.chomp
-        # new_event = Event.new
-        # new_event.save   ### commented to avoid save during testing
-        puts "New event: #{c}, #{s}, #{v}, #{att}, #{g}"
-        puts "Your added event has been saved! We thank you for your contribution."
-        # Event.create(id: event[:id], date: event[:date], city: event[:city], state: event[:state], venue: event[:venue], attendance: event[:attendance], gate: event[:gate])
-    end
+def average_attendance
+    avg = Event.average("attendance")
+    avg = avg.round
+    puts "The average UFC event had approximately #{avg} people in attendance!"
+ end
 
+ def average_gate
+    avg = Event.average("gate")
+    avg = avg.round
+    puts "The average UFC event brought in approximately $#{avg}!"
+ end
+
+ def competitors_events
+    puts "Enter a fighter name to get started:"
+        # puts "Type first name here: "
+        # input_first_name = gets.chomp
+        # puts "Type last name here: "
+        # input_last_name = gets.chomp
+        # puts "*********************************************************************************"
+        # # fighter_name = gets.chomp
+        # # fighter_name.to_s
+        # # p Competitor.find_by first_name: fighter_name
+        # puts "Here are all of the events #{input_first_name} #{input_last_name} has participated in:"
+        # fighter_name_events = Competitor.find_by(first_name: input_first_name, last_name: input_last_name).events
+        # #fighter_name_events = Competitor.find_by(first_name: fighter_name, last_name: input_last_name).events
+        # fighter_name_events.each {|e| p e}
+    fighter_name_events = Competitor.find_by(first_name: input_first_name, last_name: input_last_name).events
+ end
 ##########################################################################################
 #UPDATE:
 #   need method for updating/changing fighter wins/losses or age...
@@ -132,9 +156,49 @@ end
 ## deletes one instance of Competitor with last name
 
 ##########################################################################################
+###------Menu---------###
 # Will need some code like:
+def menu
+    puts "MENU"
+    puts "1. create something" 
+    puts "2. read something" 
+    puts "3. update something" 
+    puts "4. destroy something"
+    puts "5. exit"
+    a = gets.chomp
+        if a == "1"
+            add_event
+        elsif a == "2"
+            puts "reading method"
+        elsif a == "3"
+            puts "update method"
+        elsif a == "4"
+            puts "destroy method"
+        elsif a == "5"
+            puts "Goodbye."
+            puts "*****************************************************************************"
+        elsif a == nil
+            puts "Please select a valid option from Menu"
+            # self.menu? nope. self? nope.
+        else
+            puts "Please select a valid option from Menu"
+            self
+        end
+end
 #   g = gets.chomp
 #   if g == 1 
 #       #some_method
 #   end
 ### A user menu to choose different actions.
+
+
+
+
+
+### this will remove "DEBUG" SQL statements from
+module ActiveSupport
+    class LogSubscriber
+      def debug(*args, &block)
+      end
+    end
+  end
