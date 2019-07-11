@@ -30,6 +30,7 @@ class CommandLineInterface < ActiveRecord::Migration[5.2]
         puts fighter_name_events
         puts "------------------------------------------------------------------------------"
         puts Competitor.joins(:events).count
+        add_event
 
      end
   
@@ -74,18 +75,66 @@ class CommandLineInterface < ActiveRecord::Migration[5.2]
 end
 #CRUD
 ##########################################################################################
-#Create:
+#CREATE:
 #   need method for :create a new row for events(when new event occurs)
 #       Event.create(id: event[:id], date: event[:date], city: event[:city], state: event[:state], venue: event[:venue], attendance: event[:attendance], gate: event[:gate])
+# Create
+# i = Competitor.new
+# i.first_name = "Jon"
+# i.last_name = "Jones"
+# i.save
+# Now you can just type i and it should show you that i has been inserted into the database and it has been assigned an ID number.
 ##########################################################################################
-#Read:
+#READ:
 #   average_attendance, average_gate
+    def add_event
+        puts "Add an event by typing the required information below:"
+        puts "City: "
+        c = gets.chomp
+        puts "State: "
+        s = gets.chomp
+        puts "Venue Name: "
+        v = gets.chomp
+        puts "Attendance: "
+        att = gets.chomp
+        puts "Gate($): "
+        g = gets.chomp
+        # new_event = Event.new
+        # new_event.save   ### commented to avoid save during testing
+        puts "New event: #{c}, #{s}, #{v}, #{att}, #{g}"
+        puts "Your added event has been saved! We thank you for your contribution."
+        # Event.create(id: event[:id], date: event[:date], city: event[:city], state: event[:state], venue: event[:venue], attendance: event[:attendance], gate: event[:gate])
+    end
+
 ##########################################################################################
-#Update:
+#UPDATE:
 #   need method for updating/changing fighter wins/losses or age...
+#   To update a row, first you need to find it:
+#   c = Competitor.find_by(last_name: "Jones")
+#   And then assign whatever new values you want to:
+#   c.wins = "20"
+#   And then save.
+#   c.save
+#   That's it... But need to have more advanced query and user questions
 ##########################################################################################
-#Destroy:
+#DESTROY:
 #   delete a competitor when retired. remove entire row
 #   delete mistakes/incorrect data inputs
 ###   Competitor.delete(name: user_input)
+# To delete a row, first find it:
+# c = Competitor.find(1)  ### finds row in Competitor by id
+# And then,
+# c.destroy
+
+# puts "See and error or retired fighter?"
+# delete_name = gets.chomp
+# Competitor.where(last_name: "some name").destroy
+## deletes one instance of Competitor with last name
+
 ##########################################################################################
+# Will need some code like:
+#   g = gets.chomp
+#   if g == 1 
+#       #some_method
+#   end
+### A user menu to choose different actions.

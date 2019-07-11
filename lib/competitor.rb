@@ -6,9 +6,9 @@ class Competitor < ActiveRecord::Base
         "#{first_name} #{last_name}"
     end
 
-    def list_roles
-        self.fights.collect do |fight|
-          "#{fight.competitor_id} - #{fight.event.city}"
-        end
-      end
+    # def list_roles
+    #     self.fights.collect do |fight|
+    #       "#{fight.competitor_id} - #{fight.event.city}"
+    #     end
+    #   end
 end
