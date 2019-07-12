@@ -114,10 +114,9 @@ def average_attendance
  end
 
  def view_all_competitors
-
- end
- def view_competitor_info
-
+    Competitor.all.each do |c|
+        puts "First Name: #{c.first_name}, Last Name: #{c.last_name}, Gender: #{c.gender}, Weight(lbs): #{c.weight_in_lbs}, Height(in): #{c.height_in_inches}, Reach(in): #{c.reach_in_inches}, Age: #{c.age}, Wins: #{c.wins}, Losses: #{c.losses}"
+    end
  end
 
  def ask_for_name
@@ -196,7 +195,19 @@ def menu
         elsif a == "5" #CREATE
             add_fighter
             star_break
+            menu
+        elsif a == "6" #CREATE
+            link_competitor_and_event
+            star_break
+            menu
+        elsif a == "7" #CREATE
+            view_all_competitors
+            star_break
             menu    
+        elsif a == "8" #CREATE
+            average_attendance
+            star_break
+            menu        
         elsif a == "0"
             puts "Goodbye!"
             %x( say 'GoodBye!' )
@@ -212,20 +223,42 @@ def menu
         end
 end
 # TODO: Build a method to associate event with competitor... create new fight object to show relationship with event_id and competitor_id?
+
 #* ufc194 = Event.find_by_date("2015-12-12") ### id=13
+#* ufc194_id = ufc194[:id]
+#?
+#? input_event_id = input_event[:id]
 #* conor = Competitor.find_by_last_name("McGregor") ### id=32
+#assign id to variable...
+#? input_competitor_id = input_competitor[:id]
+#* conor_id = conor[:id] => 32
 # Both variables above will store our objects wanting to connect through fights table
 # Both of those objects have already been connected by seperate method.
-#* Fight.create(event_id: 13, competitor_id: 32)
-# This will...
+#* Fight.create(event_id: conor_id, competitor_id: ufc194_id)
+# This will create the row in join table assigning it a new id in order.
+# Builds the relationship between competitor and event...
+#? How do I gets.chomp(user input) and use the 2 ids to create fights row.
+#TODO: link_competitor_event type error line 241. implicit conv of symbol into int
+def link_competitor_and_event
+    ask_for_name
+    c = Competitor.where(first_name: @input_first_name, last_name: @input_last_name)
+    puts "Enter the date of the event your fighter competed in(YYYY-MM-DD):"
+    input_date = gets.chomp
+    e = Event.find_by_date(input_date)
+    Fight.create(event_id: e[:id], competitor_id: c[:id])
+end
+ 
 
 def menu_design
     puts "|_________|____MENU____|__________________________________|"
     puts "|  1. Add a missing UFC Event                             |"
-    puts "|  2. See which UFC events a specific fighter has been in |"
+    puts "|  2. See which UFC events a Competitor has been in       |"
     puts "|  3. Update an existing fighters win total               |"
     puts "|  4. Remove a Competitor from list                       |"
     puts "|  5. Add a Competitor to our list                        |"
+    puts "|  6*. Link a Competitor to an Event they participated in |"
+    puts "|  7. View all Competitors                                |"
+    puts "|  8. View Average Attendance at all UFC events           |"
     puts "|  0. Exit                                                |"
     puts "|_________________________________________________________|"
 end
