@@ -14,6 +14,7 @@ class CommandLineInterface < ActiveRecord::Migration[5.2]
         greet
         puts "*********************************************************************************"
         menu
+        puts "*********************************************************************************"
 
         # puts "Enter a fighter name to get started:"
         # puts "Type first name here: "
@@ -147,16 +148,14 @@ def average_attendance
  end
  def competitors_events
     puts "Enter a fighter name to get started:"
-    # puts "Type first name here: "
-        # input_first_name_name = gets.chomp
-        # puts "Type last name here: "
-        # input_last_name_name = gets.chomp
         ask_for_name
-        puts "*******************************************************************************"
+        puts "*********************************************************************************"
         puts "Here are all of the events #{@input_first_name} #{@input_last_name} has participated in:"
         fighter_name_events = Competitor.find_by(first_name: @input_first_name, last_name: @input_last_name).events
-        fighter_name_events.each {|e| p e}
- end #TODO: puts "city: #{e.city}...." each attribute in a string
+        fighter_name_events.each do |e|
+            puts "Date: #{e.date}, City: #{e.city}, State: #{e.state}, Venue: #{e.venue}, Attendance: #{e.attendance}, Gate: #{e.gate}"
+        end
+ end
 ##########################################################################################
 #!UPDATE:
 #   need method for updating/changing fighter wins/losses or age...
@@ -164,11 +163,11 @@ def average_attendance
 def update_wins_by_competitor_name
   ask_for_name
   c = Competitor.find_by(first_name: @input_first_name, last_name: @input_last_name)
-  puts "Enter the updated win total"
+  puts "Enter the updated win total here:"
   new_wins = gets.chomp
   c.wins = new_wins
   c.save
-
+  puts "Updated win total of #{new_wins} has been saved!"
 end
 #   That's it... But need to have more advanced query and user questions
 ##########################################################################################
@@ -204,44 +203,42 @@ def menu
     puts "3. Update an existing fighters win total" 
     puts "4. Remove a Competitor from list"
     puts "5. Add a Competitor to our list"
-    puts "6. exit"
+    puts "6. Exit"
     a = gets.chomp
         if a == "1"   #CREATE
             add_event
+            puts "*********************************************************************************"
             menu
         elsif a == "2"  #READ
             competitors_events
+            puts "*********************************************************************************" 
             menu
         elsif a == "3"
             update_wins_by_competitor_name
+            puts "*********************************************************************************"
             menu
         elsif a == "4"
             remove_competitor
+            puts "*********************************************************************************"
             menu
         elsif a == "5"
             add_fighter
+            puts "*********************************************************************************"
             menu    
         elsif a == "6"
             puts "Goodbye."
-            puts "*****************************************************************************"
+            puts "*********************************************************************************"
         elsif a == nil
             puts "Please select a valid option from Menu"
+            puts "*********************************************************************************"
             menu
         else
             puts "Please select a valid option from Menu"
+            puts "*********************************************************************************"
             menu
         end
 end
-#TODO: add menu method to end of methods being called.repeats after method call. looping back
-### def remove_competitor
-#   the method code
-#   menu
-#end
-#   g = gets.chomp
-#   if g == 1 
-#       #some_method
-#   end
-### A user menu to choose different actions.
+
 
 
 
