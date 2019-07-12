@@ -168,7 +168,7 @@ def update_wins_by_competitor_name
   new_wins = gets.chomp
   c.wins = new_wins
   c.save
-  menu
+
 end
 #   That's it... But need to have more advanced query and user questions
 ##########################################################################################
@@ -208,22 +208,28 @@ def menu
     a = gets.chomp
         if a == "1"   #CREATE
             add_event
+            menu
         elsif a == "2"  #READ
             competitors_events
+            menu
         elsif a == "3"
             update_wins_by_competitor_name
+            menu
         elsif a == "4"
             remove_competitor
+            menu
         elsif a == "5"
-            add_fighter    
+            add_fighter
+            menu    
         elsif a == "6"
             puts "Goodbye."
             puts "*****************************************************************************"
         elsif a == nil
             puts "Please select a valid option from Menu"
-            # self.menu? nope. self? nope.
+            menu
         else
             puts "Please select a valid option from Menu"
+            menu
         end
 end
 #TODO: add menu method to end of methods being called.repeats after method call. looping back
