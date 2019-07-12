@@ -17,3 +17,5 @@ cli.run
 # # Competitor.find_by(first_name: fighter_name)
 # puts "Here is the name: #{fighter_name}"
 # Competitor.find_by(first_name: fighter_name)
+
+
